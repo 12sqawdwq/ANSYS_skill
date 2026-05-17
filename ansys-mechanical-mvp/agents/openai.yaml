@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ansys Mechanical MVP"
+  short_description: "Guide Discovery-to-Workbench Mechanical MVP delivery."
+  default_prompt: "Use this skill to create, review, or debug an Ansys Discovery to Workbench Mechanical minimum viable simulation workflow."
