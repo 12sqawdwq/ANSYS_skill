@@ -1,0 +1,17 @@
+project:
+  solver: mechanical
+  path: "D:/ansys_runs/benchmark/cantilever_workbench.wbpj"
+  exports: "D:/ansys_runs/benchmark/mechanical_exports"
+
+benchmark:
+  name: cantilever
+  fea_tip_displacement_m: -0.003040821298
+  tolerance_percent: 5.0
+
+report:
+  output_dir: "reports"
+  name: "cantilever-validation"
+  formats: ["json", "markdown"]
+
+logging:
+  level: INFO

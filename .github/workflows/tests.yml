@@ -1,0 +1,22 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tests
+        run: |
+          export PYTHONPATH="$PWD/src"
+          python -m unittest discover -s tests
+      - name: Run benchmark CLI
+        run: |
+          export PYTHONPATH="$PWD/src"
+          python -m ansys_skill_platform.cli benchmark cantilever --fea-displacement -0.003040821298

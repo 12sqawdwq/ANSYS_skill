@@ -94,6 +94,13 @@ The intent is to grow from checklist-driven review into a reusable validation en
 
 ### CLI
 
+Run a full configured workflow:
+
+```powershell
+$env:PYTHONPATH = ".\src"
+python -m ansys_skill_platform.cli run .\examples\cantilever_workflow.yaml
+```
+
 Run the package directly during development:
 
 ```powershell

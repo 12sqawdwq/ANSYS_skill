@@ -6,6 +6,7 @@ import argparse
 from pathlib import Path
 
 from .benchmarks import CantileverBenchmark
+from .pipeline import PipelineRunner, configure_logging
 from .validators import MechanicalValidator
 
 
@@ -31,6 +32,14 @@ def _benchmark(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run(args: argparse.Namespace) -> int:
+    runner = PipelineRunner.from_file(Path(args.config))
+    configure_logging(runner.config.logging.level)
+    report = runner.run()
+    print(report.to_markdown())
+    return 0 if report.passed else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ansys-skill")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -45,6 +54,10 @@ def build_parser() -> argparse.ArgumentParser:
     benchmark.add_argument("name", choices=["cantilever"], help="Benchmark name.")
     benchmark.add_argument("--fea-displacement", type=float, help="FEA tip displacement in meters.")
     benchmark.set_defaults(func=_benchmark)
+
+    run = subparsers.add_parser("run", help="Run a configured validation workflow.")
+    run.add_argument("config", help="Path to a workflow YAML or JSON config.")
+    run.set_defaults(func=_run)
 
     return parser
 

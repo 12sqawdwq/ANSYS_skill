@@ -55,4 +55,5 @@ For the newer platform CLI, run:
 ```powershell
 $env:PYTHONPATH = ".\src"
 python -m ansys_skill_platform.cli validate <path-to-project.wbpj> --exports <optional-export-dir>
+python -m ansys_skill_platform.cli run .\examples\cantilever_workflow.yaml
 ```
