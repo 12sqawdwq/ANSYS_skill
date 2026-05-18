@@ -1,0 +1,4 @@
+interface:
+  display_name: "CAE Validation Platform"
+  short_description: "Refactor CAE workflows into validation platforms."
+  default_prompt: "Use this skill to review a CAE automation repository and refactor it into a verification-driven simulation validation platform."

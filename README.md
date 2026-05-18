@@ -19,9 +19,12 @@ That distinction turns this repository from a GUI walkthrough into a verificatio
 This repository now contains two layers:
 
 - `ansys-mechanical-mvp/`: Codex / Claude guidance for the Discovery-to-Mechanical minimum viable path.
+- `cae-validation-platform/`: strict FEM/CFD review and platform refactor guidance.
 - `src/ansys_skill_platform/`: a Python package skeleton for validation, benchmark references, and CLI automation.
 
-## Skill
+## Skills
+
+### Ansys Mechanical MVP
 
 ```text
 ansys-mechanical-mvp/
@@ -47,6 +50,28 @@ Codex users can start from:
 ```text
 ansys-mechanical-mvp/SKILL.md
 ```
+
+### CAE Validation Platform
+
+```text
+cae-validation-platform/
+```
+
+Use this skill when the task is bigger than a single Ansys Mechanical deliverable:
+
+- reviewing a CAE automation repository from a strict FEM/CFD engineering standpoint
+- converting a README/checklist repository into a validation framework
+- defining solver-state and result-credibility gates
+- designing benchmark databases, validator contracts, report contracts, and plugin boundaries
+- planning future support for Mechanical, MAPDL, Fluent, Abaqus, CalculiX, PyMAPDL, PyDPF, or LLM-assisted CAE QA
+
+The skill deliberately separates:
+
+- physics credibility
+- numerical credibility
+- solver-state evidence
+- postprocessing evidence
+- software architecture
 
 ## Platform Skeleton
 
@@ -181,6 +206,13 @@ ansys-mechanical-mvp/
     mechanical-mvp.md
   scripts/
     check_mechanical_delivery.py
+cae-validation-platform/
+  SKILL.md
+  agents/
+    openai.yaml
+  references/
+    strict-fem-cfd-review.md
+    platform-refactor-playbook.md
 src/
   ansys_skill_platform/
     cli.py

@@ -5,6 +5,12 @@ When working on Ansys Discovery / SpaceClaim / Workbench / Mechanical deliverabl
 - `ansys-mechanical-mvp/SKILL.md`
 - `ansys-mechanical-mvp/references/mechanical-mvp.md`
 
+When reviewing or refactoring the repository as a simulation validation platform, also read:
+
+- `cae-validation-platform/SKILL.md`
+- `cae-validation-platform/references/strict-fem-cfd-review.md`
+- `cae-validation-platform/references/platform-refactor-playbook.md`
+
 For automation work, also inspect:
 
 - `src/ansys_skill_platform/validators/mechanical.py`
