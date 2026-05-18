@@ -1,12 +1,25 @@
 # ANSYS_skill
 
-This repository contains a Codex skill for building and reviewing a minimum viable Ansys simulation delivery path:
+This repository is evolving from an Ansys workflow skill into a small simulation validation platform.
+
+Its current focus is a real engineering handoff problem:
 
 ```text
 Discovery / SpaceClaim geometry -> Workbench project -> Mechanical mesh/load/solve/evaluate/save
 ```
 
-The skill is designed around a practical lesson from the cantilever benchmark workflow: a Mechanical tree can contain result objects without actually showing evaluated result contours. The final acceptance criterion is not "the object exists"; it is "Mechanical shows contour, legend, and non-empty Min/Max values."
+The core lesson is deliberately strict:
+
+> The final acceptance criterion is not "the object exists"; it is "Mechanical shows contour, legend, and non-empty Min/Max values."
+
+That distinction turns this repository from a GUI walkthrough into a verification-oriented CAE workflow project.
+
+## Current Scope
+
+This repository now contains two layers:
+
+- `ansys-mechanical-mvp/`: Codex / Claude guidance for the Discovery-to-Mechanical minimum viable path.
+- `src/ansys_skill_platform/`: a Python package skeleton for validation, benchmark references, and CLI automation.
 
 ## Skill
 
@@ -22,6 +35,64 @@ Use this skill when working on:
 - mesh/load/result-object review
 - PyMAPDL benchmark comparison
 - deciding whether Mechanical results are truly solved and evaluated
+
+Claude Code users can start from:
+
+```text
+CLAUDE.md
+```
+
+Codex users can start from:
+
+```text
+ansys-mechanical-mvp/SKILL.md
+```
+
+## Platform Skeleton
+
+The software layer introduces a small but real architecture:
+
+```text
+src/ansys_skill_platform/
+  cli.py
+  benchmarks/
+    cantilever.py
+  validators/
+    mechanical.py
+benchmarks/
+  cantilever/
+    benchmark.json
+tests/
+```
+
+The intent is to grow from checklist-driven review into a reusable validation engine.
+
+### CLI
+
+Run the package directly during development:
+
+```powershell
+$env:PYTHONPATH = ".\src"
+python -m ansys_skill_platform.cli benchmark cantilever
+```
+
+Validate a Workbench Mechanical delivery envelope:
+
+```powershell
+$env:PYTHONPATH = ".\src"
+python -m ansys_skill_platform.cli validate `
+  "D:\ansys_runs\benchmark\cantilever_workbench.wbpj" `
+  --exports "D:\ansys_runs\benchmark\mechanical_exports" `
+  --json validation-report.json
+```
+
+After editable installation, the same command becomes:
+
+```powershell
+ansys-skill validate "D:\ansys_runs\benchmark\cantilever_workbench.wbpj"
+```
+
+The validator checks the delivery envelope: `.wbpj`, `_files`, `.mechdb`, `ds.dat`, solver-input tokens, and suspicious AVZ exports. It still does not replace Mechanical GUI validation.
 
 ## Why This Skill Exists
 
@@ -99,6 +170,9 @@ A Workbench Mechanical deliverable is accepted only when all of the following ar
 ## Repository Layout
 
 ```text
+CLAUDE.md
+README.md
+pyproject.toml
 ansys-mechanical-mvp/
   SKILL.md
   agents/
@@ -107,6 +181,15 @@ ansys-mechanical-mvp/
     mechanical-mvp.md
   scripts/
     check_mechanical_delivery.py
+src/
+  ansys_skill_platform/
+    cli.py
+    benchmarks/
+    validators/
+benchmarks/
+  cantilever/
+    benchmark.json
+tests/
 assets/
   images/
     not-evaluated-result.png
@@ -146,3 +229,37 @@ Copy-Item -Recurse .\ansys-mechanical-mvp "$env:USERPROFILE\.codex\skills\ansys-
 ```
 
 Then ask Codex to use the `ansys-mechanical-mvp` skill when building or reviewing Ansys Discovery / Workbench Mechanical deliverables.
+
+## Development
+
+Run tests with:
+
+```powershell
+$env:PYTHONPATH = ".\src"
+python -m unittest discover -s tests
+```
+
+Run the validator on a project:
+
+```powershell
+$env:PYTHONPATH = ".\src"
+python -m ansys_skill_platform.cli validate <project.wbpj> --exports <optional-export-dir>
+```
+
+## Roadmap
+
+Near-term platform upgrades:
+
+- package the validator as a stable CLI
+- add richer Mechanical solver-input parsing
+- generate JSON and Markdown engineering reports
+- add benchmark database entries beyond the cantilever case
+- add PyMAPDL / PyDPF result extraction
+- add mesh-convergence and sanity-check workflows
+
+Longer-term direction:
+
+- plugin validators for Mechanical, MAPDL, Fluent, Abaqus, and CalculiX
+- simulation QA dashboards
+- CI checks for benchmark regressions
+- LLM-assisted engineering review agents

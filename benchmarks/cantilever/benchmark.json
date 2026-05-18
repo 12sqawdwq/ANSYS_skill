@@ -1,0 +1,24 @@
+{
+  "name": "cantilever",
+  "type": "static_structural",
+  "geometry": {
+    "length_m": 1.0,
+    "width_m": 0.05,
+    "height_m": 0.05
+  },
+  "material": {
+    "young_modulus_pa": 210000000000.0,
+    "poisson_ratio": 0.3
+  },
+  "load": {
+    "tip_force_z_n": -1000.0
+  },
+  "mesh": {
+    "target_element_size_m": 0.02
+  },
+  "analytical_reference": {
+    "method": "Euler-Bernoulli beam theory",
+    "tip_displacement_m": -0.0030476190476190477,
+    "preferred_relative_error_percent_max": 5.0
+  }
+}

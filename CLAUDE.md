@@ -5,6 +5,12 @@ When working on Ansys Discovery / SpaceClaim / Workbench / Mechanical deliverabl
 - `ansys-mechanical-mvp/SKILL.md`
 - `ansys-mechanical-mvp/references/mechanical-mvp.md`
 
+For automation work, also inspect:
+
+- `src/ansys_skill_platform/validators/mechanical.py`
+- `src/ansys_skill_platform/benchmarks/cantilever.py`
+- `benchmarks/cantilever/benchmark.json`
+
 ## Core Rule
 
 Use this minimum viable path:
@@ -37,3 +43,10 @@ python .\ansys-mechanical-mvp\scripts\check_mechanical_delivery.py <path-to-proj
 ```
 
 This script does not replace Mechanical GUI validation.
+
+For the newer platform CLI, run:
+
+```powershell
+$env:PYTHONPATH = ".\src"
+python -m ansys_skill_platform.cli validate <path-to-project.wbpj> --exports <optional-export-dir>
+```
